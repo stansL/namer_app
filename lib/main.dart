@@ -46,15 +46,19 @@ class MyAppState extends ChangeNotifier {
   void toggleFavorite([WordPair? pair]) {
     pair = pair ?? current;
     if (favorites.contains(pair)) {
-      favorites.remove(pair);
+      removeFavorite(pair);
     } else {
-      favorites.add(pair);
+      addFavorite(pair);
     }
-    notifyListeners();
   }
 
   void removeFavorite(WordPair pair) {
     favorites.remove(pair);
+    notifyListeners();
+  }
+
+  void addFavorite(WordPair pair) {
+    favorites.add(pair);
     notifyListeners();
   }
 }
@@ -78,6 +82,9 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 1:
         page = FavoritesPage();
+        break;
+      case 2:
+        page = Placeholder();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -113,6 +120,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(Icons.favorite),
                         label: 'Favorites',
                       ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.settings),
+                        label: 'Settings',
+                      ),
                     ],
                     currentIndex: selectedIndex,
                     onTap: (value) {
@@ -138,6 +149,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       NavigationRailDestination(
                         icon: Icon(Icons.favorite),
                         label: Text('Favorites'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.settings),
+                        label: Text('Settings'),
                       ),
                     ],
                     selectedIndex: selectedIndex,
